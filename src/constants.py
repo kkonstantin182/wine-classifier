@@ -1,0 +1,2 @@
+SEED = 42
+TRAIN_SIZE = 0.8
