@@ -2,6 +2,8 @@ import pandas as pd
 from constants import SEED, TRAIN_SIZE
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import OneHotEncoder
+
 
 
 class Dataset:
@@ -43,7 +45,10 @@ class Dataset:
         Returns:
         (tuple): a tuple of training and testing datasets
         """
+        
+        self._merge_text_columns()
         self._train_test_sets_split()
+        # self._encode_cat_var()
         self._encode_target()
         print(self.print_shape())
         return self.train_set, self.test_set
@@ -81,8 +86,51 @@ class Dataset:
         self.test_set[self.target_name[0]] = self.test_set[self.target_name[0]].map(self.target_map)
         return self.train_set, self.test_set
 
-    def _encode_cat_var(self):
+    # def _encode_cat_var(self):
+    #     """
+    #     Encodes categorical variables using one-hot encoding.
+    #     """
+    #     """
+    #     Encodes categorical variables using one-hot encoding.
+    #     """
+    #     encoder = OneHotEncoder(sparse=False)
+    #     cat_cols = self.categorical_names
+        
+    #     # fit the encoder on the training set
+    #     encoder.fit(self.train_set[cat_cols])
+        
+    #     # transform the categorical variables for both train and test sets
+    #     train_encoded = pd.DataFrame(encoder.transform(self.train_set[cat_cols]), columns=encoder.get_feature_names_out(cat_cols))
+    #     test_encoded = pd.DataFrame(encoder.transform(self.test_set[cat_cols]), columns=encoder.get_feature_names_out(cat_cols))
+
+        
+    #     # add the encoded columns to the train and test sets and drop the original categorical columns
+    #     self.train_set = pd.concat([self.train_set, train_encoded], axis=1)
+    #     self.train_set.drop(columns=cat_cols, inplace=True)
+        
+    #     self.test_set = pd.concat([self.test_set, test_encoded], axis=1)
+    #     self.test_set.drop(columns=cat_cols, inplace=True)
+        
+    #     return self.train_set, self.test_set
+
+    def _merge_text_columns(self):
         """
-        Encodes categorical variables using one-hot encoding.
+        Merges all textual columns into a single column called 'text'.
         """
-        pass
+        self.dataset['text'] = self.dataset[self.text_names].astype(str).apply(lambda x: ' '.join(x), axis=1)
+        self.dataset.drop(columns=self.text_names, inplace=True)
+
+    
+    def _decode_target(self, y):
+        """
+        Decodes the target variable assuming the values are unique!
+        Parameters:
+        y (pandas.Series): the target variable to decode
+
+        Returns:
+        (pandas.Series): the decoded target variable
+        """
+        target_map_inv = {v: k for k, v in self.target_map.items()}
+        return y.map(target_map_inv)
+
+
