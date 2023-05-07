@@ -60,10 +60,10 @@ class TextProcessing:
         words = [word for word in text.split() if word.lower() not in self.stopwords]
         return " ".join(words)
     
-    def tokenize(self, text):
+    # def tokenize(self, text):
         
-        doc = self.model(text)
-        return [token.text for token in doc]
+    #     doc = self.model(text)
+    #     return [token.text for token in doc]
 
 
 
@@ -72,6 +72,19 @@ class TextProcessing:
     
 
 class Vectorization:
+
+    @staticmethod
+    def tokenize_it(text):
+        
+        tokens = word_tokenize(text, language='italian', preserve_line=False)
+        return tokens
+    
+    @staticmethod
+    def tokenize_eng(text):
+        
+       
+        tokens = word_tokenize(text, language='english', preserve_line=False)
+        return tokens
 
 
 
