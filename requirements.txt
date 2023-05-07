@@ -2,7 +2,7 @@ Unidecode == 1.3.6
 bornrule == 0.1.3
 nltk == 3.8.1
 pandas == 1.5.3
-scikit_learn == 1.2.1
+scikit_learn == 1.2.2
 spacy == 3.5.0
 tqdm == 4.64.1
 
