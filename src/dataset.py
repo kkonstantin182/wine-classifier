@@ -51,6 +51,10 @@ class Dataset:
         # self._encode_cat_var()
         self._encode_target()
         print(self.print_shape())
+
+        self.train_set = self.train_set.rename(columns = {self.target_name[0]: 'target'})
+        self.test_set = self.test_set.rename(columns = {self.target_name[0]: 'target'})
+        
         return self.train_set, self.test_set
          
 
