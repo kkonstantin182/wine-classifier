@@ -52,7 +52,7 @@ class TextProcessing:
         """Lemmatize text using a pre-trained lemmatization model."""
         doc = self.model(text)
         lem_arr = [token.lemma_ for token in doc]
-        print('hui')
+        
         return " ".join(lem_arr)
 
     def _remove_stopwords(self, text):
