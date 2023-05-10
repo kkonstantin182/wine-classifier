@@ -46,7 +46,8 @@ class Dataset:
         (tuple): a tuple of training and testing datasets
         """
         
-        self._merge_text_columns()
+        if 'text' not in self.dataset.columns:
+            self._merge_text_columns()
         self._train_test_sets_split()
         # self._encode_cat_var()
         self._encode_target()
